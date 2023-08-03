@@ -2,9 +2,9 @@ name: "RUN TESTS ON PUSH then deploy"
 on:
   push:
     branches:
-      - main
+      - deployment
 jobs:
-    test:
+    test_and_deploy:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -14,7 +14,9 @@ jobs:
                 node-version: '18.x'
             - name: Install dependencies
               run: npm install
+            - name: install amplify commands
+              run: npm install -g @aws-amplify/cli
             - name: Run tests
               run: npm run test
-            - name: Print success message
-              run: echo "Success! all the tests passed , the deployment could be done now"
+            - name: deploy through amplify
+              run: amplify publish
