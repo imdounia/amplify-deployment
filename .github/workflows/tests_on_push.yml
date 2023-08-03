@@ -2,9 +2,9 @@ name: "RUN TESTS ON PUSH then deploy"
 on:
   push:
     branches:
-      - main
+      - deployment
 jobs:
-    test:
+    test_and_deploy:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -17,4 +17,4 @@ jobs:
             - name: Run tests
               run: npm run test
             - name: Print success message
-              run: echo "Success! all the tests passed , the deployment could be done now"
+              run: "amplify publish"
